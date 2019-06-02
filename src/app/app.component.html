@@ -1,0 +1,25 @@
+<div class="container">
+
+  <div class="input-field">
+    <i class="material-icons prefix">shopping_cart</i>
+    <input id="icon_prefix" (keyup.enter)="add(input)" #input placeholder="Add Item..">
+  </div>
+
+  <ul class="collection with-header">
+    <li class="collection-header"><h4>Items</h4></li>
+    <li class="collection-item" *ngFor="let item of items$ | async; trackBy: track">
+      <div [class.done]="item.completed">{{item.title}}
+        <span class="secondary-content" (click)="remove(item.id)">
+        <i class="material-icons">delete_forever</i>
+      </span>
+        <span class="secondary-content" (click)="toggle(item.id)">
+        <i class="material-icons">done</i>
+      </span>
+      </div>
+    </li>
+  </ul>
+
+</div>
+
+
+
