@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import io from 'socket.io-client';
-import { ShoppingListStore } from './state/shopping-list.store';
+import { LivefeedListStore } from './state/livefeed-list.store';
 import { ID, runStoreAction, StoreActions } from '@datorama/akita';
-import { createShoppingListItem } from './state/shopping-list.model';
+import { createLivefeedListItem } from './state/livefeed-list.model';
 
 const resolveAction = {
   ADD: StoreActions.AddEntities,
@@ -12,10 +12,10 @@ const resolveAction = {
 };
 
 @Injectable({ providedIn: 'root' })
-export class ShoppingListService {
+export class LivefeedListService {
   private socket;
 
-  constructor(private store: ShoppingListStore) {
+  constructor(private store: LivefeedListStore) {
   }
 
   connect() {
@@ -33,8 +33,8 @@ export class ShoppingListService {
     return () => this.socket.disconnect();
   }
 
-  add(title: string) {
-    this.socket.emit('list:add', createShoppingListItem({ title }));
+  add(name: string) {
+    this.socket.emit('list:add', createLivefeedListItem({ name }));
   }
 
   remove(id: ID) {

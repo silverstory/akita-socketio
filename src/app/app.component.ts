@@ -1,42 +1,42 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ShoppingListService } from './shopping-list.service';
+import { LivefeedListService } from './livefeed-list.service';
 import { Observable } from 'rxjs';
-import { ShoppingListQuery } from './state/shopping-list.query';
+import { LivefeedListQuery } from './state/livefeed-list.query';
 import { ID } from '@datorama/akita';
-import { ShoppingListItem } from './state/shopping-list.model';
+import { LivefeedListItem } from './state/livefeed-list.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  // styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  items$: Observable<ShoppingListItem[]>;
+  items$: Observable<LivefeedListItem[]>;
   private disposeConnection: VoidFunction;
 
-  constructor(private shoppingList: ShoppingListService, private query: ShoppingListQuery) {
+  constructor(private livefeedList: LivefeedListService, private query: LivefeedListQuery) {
   }
 
   ngOnInit() {
     this.items$ = this.query.selectAll();
-    this.disposeConnection = this.shoppingList.connect();
+    this.disposeConnection = this.livefeedList.connect();
   }
 
   add(input: HTMLInputElement) {
-    this.shoppingList.add(input.value);
+    this.livefeedList.add(input.value);
     input.value = '';
   }
 
   remove(id: ID) {
-    this.shoppingList.remove(id);
+    this.livefeedList.remove(id);
   }
 
   toggle(id: ID) {
-    this.shoppingList.toggleCompleted(id);
+    this.livefeedList.toggleCompleted(id);
   }
 
   track(_, item) {
-    return item.title;
+    return item.name;
   }
 
   ngOnDestroy() {
