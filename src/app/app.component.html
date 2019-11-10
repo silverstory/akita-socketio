@@ -2,7 +2,11 @@
 
   <div class="input-field">
     <i class="material-icons prefix">rss_feed</i>
-    <input id="icon_prefix" (keyup.enter)="add(input)" #input placeholder="Add Item..">
+    <input id="icon_prefix" (keyup.enter)="feed(feedinput)" #feedinput placeholder="Add Feed..">
+  </div>
+  <div class="input-field">
+    <i class="material-icons prefix">rss_feed</i>
+    <input id="icon_prefix" (keyup.enter)="add(addinput)" #addinput placeholder="Add Item..">
   </div>
 
   <ul class="collection with-header">
@@ -28,5 +32,13 @@
       </div>
     </li>
   </ul>
-
 </div>
+
+
+<ul class="list">
+  <cdk-virtual-scroll-viewport style="height: 300px; width: 500px;" itemSize="100" >
+    <ng-container *cdkVirtualFor="let n of items$">
+      <li> {{n?.name}} </li>
+    </ng-container>
+  </cdk-virtual-scroll-viewport>
+</ul>

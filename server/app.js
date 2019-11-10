@@ -4,10 +4,22 @@ const io = require('socket.io')(server);
 
 let list = [];
 
-io.on('connection', function( socket ) {
+io.on('connection', function (socket) {
   socket.emit('list', {
     type: 'SET',
     data: list
+  });
+
+  socket.on('list:feed', item => {
+
+    // limits list items to only 4 items
+    const rightmostlist = list.slice(0,3);
+    list = [item, ...rightmostlist];
+
+    io.sockets.emit('list', {
+      type: 'SET',
+      data: list
+    });
   });
 
   socket.on('list:add', item => {
@@ -23,13 +35,13 @@ io.on('connection', function( socket ) {
 
     io.sockets.emit('list', {
       type: 'REMOVE',
-      ids : id
+      ids: id
     });
   });
 
   socket.on('list:toggle', id => {
     list = list.map(item => {
-      if( item.id === id ) {
+      if (item.id === id) {
         return {
           ...item,
           completed: !item.completed
@@ -40,7 +52,7 @@ io.on('connection', function( socket ) {
 
     io.sockets.emit('list', {
       type: 'UPDATE',
-      ids : id,
+      ids: id,
       data: list.find(current => current.id === id)
     });
   })

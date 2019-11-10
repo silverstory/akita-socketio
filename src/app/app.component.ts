@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import { LivefeedListService } from './livefeed-list.service';
 import { Observable } from 'rxjs';
 import { LivefeedListQuery } from './state/livefeed-list.query';
@@ -9,6 +9,8 @@ import { LivefeedListItem } from './state/livefeed-list.model';
   selector: 'app-root',
   templateUrl: './app.component.html',
   // styleUrls: ['./app.component.scss']
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {
   items$: Observable<LivefeedListItem[]>;
@@ -20,6 +22,11 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.items$ = this.query.selectAll();
     this.disposeConnection = this.livefeedList.connect();
+  }
+
+  feed(input: HTMLInputElement) {
+    this.livefeedList.feed(input.value);
+    input.value = '';
   }
 
   add(input: HTMLInputElement) {

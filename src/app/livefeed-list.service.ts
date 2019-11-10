@@ -33,6 +33,10 @@ export class LivefeedListService {
     return () => this.socket.disconnect();
   }
 
+  feed(name: string) {
+    this.socket.emit('list:feed', createLivefeedListItem({ name }));
+  }
+
   add(name: string) {
     this.socket.emit('list:add', createLivefeedListItem({ name }));
   }
