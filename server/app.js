@@ -4,6 +4,20 @@ const io = require('socket.io')(server);
 
 let list = [];
 
+let highlighted = [];
+
+let overall = 0;
+let visitors = 0;
+let tourists = 0;
+let others = 0;
+
+let gate7 = 0;
+let gate6 = 0;
+let gate4 = 0;
+let gate2 = 0;
+
+let logs = [];
+
 io.on('connection', function (socket) {
   socket.emit('list', {
     type: 'SET',
