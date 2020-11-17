@@ -96,11 +96,19 @@ io.on('connection', function (socket) {
   // });
 
   socket.on('entirelist:add', item => {
+    entirelist = [ item, ...entirelist ];
+    io.sockets.emit('entirelist', {
+      type: 'ADD',
+      data: item
+    });
+
+    /*
     entirelist.push(item);
     io.sockets.emit('entirelist', {
       type: 'ADD',
       data: item
     });
+    */
   });
 
   socket.on('entirelist:remove', id => {
