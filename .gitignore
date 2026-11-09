@@ -30,6 +30,7 @@
 /libpeerconnection.log
 npm-debug.log
 testem.log
+/server/logs/send-notification.csv
 /typings
 
 # e2e

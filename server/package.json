@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon node ./bin/www"
+    "start": "nodemon node ./bin/www",
+    "test:notification-log": "node ./scripts/test-notification-log.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

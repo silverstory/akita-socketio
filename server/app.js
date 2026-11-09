@@ -2,6 +2,7 @@ const app = require('express')();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const bodyParser = require("body-parser");
+const logNotification = require('./notification-log');
 
 const port = 8000;
 
@@ -168,8 +169,16 @@ io.on('connection', function (socket) {
 });
 
 // Send Notification API
-app.post('/send-notification', (req, res) => {
-  // const notify = {data: req.body};
+app.post('/send-notification', async (req, res, next) => {
+  try {
+    await logNotification(req.body);
+  } catch (error) {
+    console.error('Unable to write notification CSV:', error);
+    return res.status(500).send('Unable to log notification');
+  }
+
+  next();
+}, (req, res) => {
   const notify = req.body;
   console.log(notify);
 
